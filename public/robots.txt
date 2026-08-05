@@ -1,14 +1,41 @@
+# Standard Search Engine Crawlers
 User-agent: Googlebot
 Allow: /
 
 User-agent: Bingbot
 Allow: /
 
-User-agent: Twitterbot
+# AI Overview & Search Citation Crawlers (Generative Engine Optimization)
+User-agent: Google-Extended
 Allow: /
 
-User-agent: facebookexternalhit
+User-agent: GPTBot
 Allow: /
 
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+# Standard Directives
 User-agent: *
 Allow: /
+
+# Prevent crawling of administrative/backend directories
+Disallow: /admin/
+Disallow: /wp-admin/
+Disallow: /cart/
+Disallow: /checkout/
+
+# Dynamic XML Sitemap Reference
+Sitemap: https://cleaningexpertgorakhpur.com/sitemap.xml

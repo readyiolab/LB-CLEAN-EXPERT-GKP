@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
-import { collections } from "@/data/products";
+import { ArrowRight, Phone, Mail, MapPin, Clock } from "lucide-react";
 
 export const Footer = () => {
   return (
@@ -14,31 +13,29 @@ export const Footer = () => {
                 to="/"
                 className="font-serif text-3xl md:text-4xl tracking-tight text-background"
               >
-                Maison
+                Cleaning Expert
               </Link>
-              <p className="mt-3 text-sm text-background/50 leading-relaxed max-w-xs">
-                Curated home objects and lifestyle pieces for considered living.
+              <p className="mt-3 text-sm text-background/50 leading-relaxed max-w-sm">
+                Professional deep cleaning services in Gorakhpur. Available 24/7 for homes, offices, and commercial spaces.
               </p>
             </div>
 
-            {/* Newsletter in footer */}
-            <div className="max-w-sm w-full">
-              <p className="text-[10px] font-semibold tracking-[0.3em] uppercase text-background/40 mb-3">
-                Stay Connected
-              </p>
-              <form className="flex gap-0">
-                <input
-                  type="email"
-                  placeholder="Your email"
-                  className="flex-1 h-12 px-4 text-sm bg-background/5 border border-background/15 text-background placeholder:text-background/30 focus:outline-none focus:border-background/40 transition-colors"
-                />
-                <button
-                  type="submit"
-                  className="h-12 px-5 text-sm font-medium bg-background text-foreground hover:bg-background/90 transition-colors"
-                >
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-              </form>
+            {/* Quick contact */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <a
+                href="tel:+91-9115339900"
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold tracking-[0.05em] text-primary-foreground hover:bg-primary/90 transition-colors"
+              >
+                <Phone className="w-4 h-4" />
+                +91-9115339900
+              </a>
+              <a
+                href="mailto:cleaningexpert9@gmail.com"
+                className="inline-flex items-center gap-2 rounded-full bg-background/10 px-6 py-3 text-sm font-semibold tracking-[0.05em] text-background hover:bg-background/20 transition-colors"
+              >
+                <Mail className="w-4 h-4" />
+                Email Us
+              </a>
             </div>
           </div>
         </div>
@@ -47,20 +44,53 @@ export const Footer = () => {
       {/* Main footer content */}
       <div className="container-full py-12 md:py-16">
         <div className="grid gap-10 md:grid-cols-4">
-          {/* Collections */}
+          {/* Home Services */}
           <div>
             <h4 className="text-[11px] font-semibold tracking-[0.25em] uppercase text-background/40 mb-5">
-              Collections
+              Home Services
             </h4>
             <ul className="space-y-3">
-              {collections.slice(0, 6).map((collection) => (
-                <li key={collection.id}>
-                  <Link
-                    to={`/products?collection=${collection.slug}`}
+              {[
+                "Deep Home Cleaning",
+                "Kitchen Deep Cleaning",
+                "Bathroom Cleaning",
+                "Sofa Cleaning",
+                "Carpet Cleaning",
+                "Mattress Cleaning",
+              ].map((service) => (
+                <li key={service}>
+                  <a
+                    href="tel:+91-9115339900"
                     className="text-sm text-background/60 hover:text-background transition-colors duration-300"
                   >
-                    {collection.name}
-                  </Link>
+                    {service}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Commercial Services */}
+          <div>
+            <h4 className="text-[11px] font-semibold tracking-[0.25em] uppercase text-background/40 mb-5">
+              Commercial Services
+            </h4>
+            <ul className="space-y-3">
+              {[
+                "Office Cleaning",
+                "Restaurant Cleaning",
+                "School Cleaning",
+                "Hospital Cleaning",
+                "Warehouse Cleaning",
+                "Hotel Cleaning",
+              ].map((service) => (
+                <li key={service}>
+                  <a
+                    href="tel:+91-9115339900"
+                    className="text-sm text-background/60 hover:text-background transition-colors duration-300"
+                  >
+                    {service}
+                  </a>
                 </li>
               ))}
             </ul>
@@ -74,10 +104,10 @@ export const Footer = () => {
             <ul className="space-y-3">
               <li>
                 <Link
-                  to="/products"
+                  to="/"
                   className="text-sm text-background/60 hover:text-background transition-colors duration-300"
                 >
-                  Shop All
+                  Home
                 </Link>
               </li>
               <li>
@@ -85,49 +115,8 @@ export const Footer = () => {
                   to="/about"
                   className="text-sm text-background/60 hover:text-background transition-colors duration-300"
                 >
-                  Our Story
+                  About Us
                 </Link>
-              </li>
-              <li>
-                <Link
-                  to="/cart"
-                  className="text-sm text-background/60 hover:text-background transition-colors duration-300"
-                >
-                  Shopping Bag
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Support */}
-          <div>
-            <h4 className="text-[11px] font-semibold tracking-[0.25em] uppercase text-background/40 mb-5">
-              Support
-            </h4>
-            <ul className="space-y-3">
-              <li>
-                <a
-                  href="#"
-                  className="text-sm text-background/60 hover:text-background transition-colors duration-300"
-                >
-                  Shipping & Returns
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-sm text-background/60 hover:text-background transition-colors duration-300"
-                >
-                  Care Guide
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-sm text-background/60 hover:text-background transition-colors duration-300"
-                >
-                  FAQ
-                </a>
               </li>
             </ul>
           </div>
@@ -137,18 +126,35 @@ export const Footer = () => {
             <h4 className="text-[11px] font-semibold tracking-[0.25em] uppercase text-background/40 mb-5">
               Contact
             </h4>
-            <ul className="space-y-3">
-              <li>
+            <ul className="space-y-4">
+              <li className="flex items-start gap-3">
+                <MapPin className="w-4 h-4 text-background/40 mt-0.5 shrink-0" />
+                <p className="text-sm text-background/60 leading-relaxed">
+                  32/301 Lohiya Enclave Phase 1, Opposite Zoo, Deoria bypass road, Gorakhpur, UP 273016
+                </p>
+              </li>
+              <li className="flex items-center gap-3">
+                <Phone className="w-4 h-4 text-background/40 shrink-0" />
                 <a
-                  href="mailto:hello@maison.com"
+                  href="tel:+91-9115339900"
                   className="text-sm text-background/60 hover:text-background transition-colors duration-300"
                 >
-                  hello@maison.com
+                  +91-9115339900
                 </a>
               </li>
-              <li>
-                <p className="text-sm text-background/40 leading-relaxed">
-                  Mon–Fri, 9am–6pm CET
+              <li className="flex items-center gap-3">
+                <Mail className="w-4 h-4 text-background/40 shrink-0" />
+                <a
+                  href="mailto:cleaningexpert9@gmail.com"
+                  className="text-sm text-background/60 hover:text-background transition-colors duration-300"
+                >
+                  cleaningexpert9@gmail.com
+                </a>
+              </li>
+              <li className="flex items-center gap-3">
+                <Clock className="w-4 h-4 text-background/40 shrink-0" />
+                <p className="text-sm text-background/60">
+                  24/7 — All Days
                 </p>
               </li>
             </ul>
@@ -160,7 +166,7 @@ export const Footer = () => {
       <div className="border-t border-background/10">
         <div className="container-full py-6 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-xs text-background/30">
-            © {new Date().getFullYear()} Maison. All rights reserved.
+            © {new Date().getFullYear()} Cleaning Expert Gorakhpur. All rights reserved.
           </p>
           <div className="flex gap-8">
             <a
@@ -174,12 +180,6 @@ export const Footer = () => {
               className="text-xs text-background/30 hover:text-background/60 transition-colors duration-300"
             >
               Terms of Service
-            </a>
-            <a
-              href="#"
-              className="text-xs text-background/30 hover:text-background/60 transition-colors duration-300"
-            >
-              Cookie Policy
             </a>
           </div>
         </div>
