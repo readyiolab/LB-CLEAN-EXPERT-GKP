@@ -1,29 +1,12 @@
 import { Link } from "react-router-dom";
-import { Heart, Menu, X } from "lucide-react";
+import { Menu, X, Phone } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useWishlist } from "@/hooks/useWishlist";
-import { CartIcon } from "@/components/CartIcon";
-import { collections } from "@/data/products";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
 export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { items } = useWishlist();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,6 +15,30 @@ export const Header = () => {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const navLinks = [
+    { to: "/", label: "Home" },
+    { to: "/about", label: "About" },
+  ];
+
+  const serviceLinks = [
+    "Deep Home Cleaning",
+    "Kitchen Deep Cleaning",
+    "Bathroom Deep Cleaning",
+    "Sofa Cleaning",
+    "Carpet Cleaning",
+    "Mattress Cleaning",
+    "Curtain Cleaning",
+    "Move-In / Move-Out Cleaning",
+    "Commercial Cleaning",
+    "Office Cleaning",
+    "Restaurant Cleaning",
+    "School & College Cleaning",
+    "Hospital & Clinic Cleaning",
+    "Water Tank Cleaning",
+    "Solar Panel Cleaning",
+    "Post Construction Cleaning",
+  ];
 
   return (
     <header
@@ -49,108 +56,44 @@ export const Header = () => {
             to="/"
             className="font-serif text-2xl md:text-3xl tracking-tight text-foreground hover:text-primary transition-colors duration-300"
           >
-            Maison
+            Cleaning Expert
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            <NavigationMenu>
-              <NavigationMenuList>
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger className="bg-transparent text-xs font-medium tracking-[0.15em] uppercase text-muted-foreground hover:text-foreground">
-                    Collections
-                  </NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className="grid w-[400px] gap-1 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                      {collections.map((collection) => (
-                        <li key={collection.id}>
-                          <NavigationMenuLink asChild>
-                            <Link
-                              to={`/products?collection=${collection.slug}`}
-                              className={cn(
-                                "block select-none space-y-1 rounded-sm p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                              )}
-                            >
-                              <div className="text-sm font-medium leading-none">
-                                {collection.name}
-                              </div>
-                              <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                                {collection.description}
-                              </p>
-                            </Link>
-                          </NavigationMenuLink>
-                        </li>
-                      ))}
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
+            {navLinks.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className="text-xs font-medium tracking-[0.15em] uppercase text-muted-foreground hover:text-foreground transition-colors duration-300 link-underline"
+              >
+                {link.label}
+              </Link>
+            ))}
 
-            <Link
-              to="/products"
-              className="text-xs font-medium tracking-[0.15em] uppercase text-muted-foreground hover:text-foreground transition-colors duration-300 link-underline"
+            <a
+              href="tel:+91-9115339900"
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-2.5 text-xs font-semibold tracking-[0.05em] uppercase text-primary-foreground hover:bg-primary/90 transition-colors duration-300"
             >
-              Shop All
-            </Link>
-
-            <Link
-              to="/about"
-              className="text-xs font-medium tracking-[0.15em] uppercase text-muted-foreground hover:text-foreground transition-colors duration-300 link-underline"
-            >
-              About
-            </Link>
+              <Phone className="w-3.5 h-3.5" />
+              +91-9115339900
+            </a>
           </div>
 
           {/* Right side actions */}
-          <div className="flex items-center gap-2">
-            {/* Wishlist Icon with Tooltip */}
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button className="relative p-2 hover:bg-accent transition-colors duration-300 group">
-                  <Heart className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
-                  <AnimatePresence>
-                    {items.length > 0 && (
-                      <motion.span
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        exit={{ scale: 0 }}
-                        className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-primary text-primary-foreground text-[10px] font-semibold rounded-full flex items-center justify-center"
-                      >
-                        {items.length > 9 ? "9+" : items.length}
-                      </motion.span>
-                    )}
-                  </AnimatePresence>
-                </button>
-              </TooltipTrigger>
-              <TooltipContent side="bottom" className="max-w-xs">
-                {items.length === 0 ? (
-                  <p className="text-sm">Your wishlist is empty</p>
-                ) : (
-                  <div className="space-y-2">
-                    <p className="text-sm font-medium">{items.length} saved {items.length === 1 ? 'item' : 'items'}</p>
-                    <div className="space-y-1">
-                      {items.slice(0, 3).map((item) => (
-                        <p key={item.id} className="text-xs text-muted-foreground truncate">
-                          {item.name}
-                        </p>
-                      ))}
-                      {items.length > 3 && (
-                        <p className="text-xs text-muted-foreground">+{items.length - 3} more</p>
-                      )}
-                    </div>
-                  </div>
-                )}
-              </TooltipContent>
-            </Tooltip>
+          <div className="flex items-center gap-2 md:hidden">
+            <a
+              href="tel:+91-9115339900"
+              className="p-2 hover:bg-accent transition-colors duration-300"
+              aria-label="Call us"
+            >
+              <Phone className="w-5 h-5" />
+            </a>
 
-            {/* Cart Icon */}
-            <CartIcon />
-
-            {/* Mobile menu button */}
             <button
-              className="md:hidden p-2 hover:bg-accent transition-colors duration-300"
+              className="p-2 hover:bg-accent transition-colors duration-300"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             >
               <AnimatePresence mode="wait">
                 {mobileMenuOpen ? (
@@ -189,49 +132,52 @@ export const Header = () => {
               transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] as const }}
               className="md:hidden border-t border-border overflow-hidden"
             >
-              <div className="py-8 space-y-6">
-                <div className="space-y-1">
+              <div className="py-6 space-y-2">
+                {navLinks.map((link, i) => (
+                  <motion.div
+                    key={link.to}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.05 }}
+                  >
+                    <Link
+                      to={link.to}
+                      className="block px-2 py-2.5 text-sm font-medium hover:bg-accent transition-colors duration-300"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {link.label}
+                    </Link>
+                  </motion.div>
+                ))}
+
+                <div className="pt-4 border-t border-border mt-4">
                   <p className="text-[10px] font-semibold tracking-[0.3em] uppercase text-muted-foreground/50 px-2 mb-3">
-                    Collections
+                    Services
                   </p>
-                  {collections.slice(0, 6).map((collection, i) => (
-                    <motion.div
-                      key={collection.id}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.05 }}
-                    >
-                      <Link
-                        to={`/products?collection=${collection.slug}`}
-                        className="block px-2 py-2.5 text-sm hover:bg-accent transition-colors duration-300"
-                        onClick={() => setMobileMenuOpen(false)}
+                  <div className="grid grid-cols-2 gap-1">
+                    {serviceLinks.map((service, i) => (
+                      <motion.a
+                        key={service}
+                        href="tel:+91-9115339900"
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.1 + i * 0.03 }}
+                        className="block px-2 py-2 text-xs text-muted-foreground hover:text-foreground hover:bg-accent transition-colors duration-300"
                       >
-                        {collection.name}
-                      </Link>
-                    </motion.div>
-                  ))}
+                        {service}
+                      </motion.a>
+                    ))}
+                  </div>
                 </div>
-                <div className="pt-6 border-t border-border space-y-1">
-                  {[
-                    { to: "/products", label: "Shop All" },
-                    { to: "/about", label: "About" },
-                    { to: "/cart", label: "Shopping Bag" },
-                  ].map((link, i) => (
-                    <motion.div
-                      key={link.to}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.3 + i * 0.05 }}
-                    >
-                      <Link
-                        to={link.to}
-                        className="block px-2 py-2.5 text-sm font-medium hover:bg-accent transition-colors duration-300"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        {link.label}
-                      </Link>
-                    </motion.div>
-                  ))}
+
+                <div className="pt-4 px-2">
+                  <a
+                    href="tel:+91-9115339900"
+                    className="flex items-center justify-center gap-2 w-full rounded-full bg-primary px-6 py-3 text-sm font-semibold tracking-[0.05em] uppercase text-primary-foreground hover:bg-primary/90 transition-colors duration-300"
+                  >
+                    <Phone className="w-4 h-4" />
+                    Call Now
+                  </a>
                 </div>
               </div>
             </motion.div>
