@@ -541,14 +541,14 @@ const Index = () => {
             transition={{ duration: 0.8 }}
           >
             <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-white/60 mb-5">
-              Book Today
+              Need Home Services Today?
             </p>
             <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight">
-              Ready for a Spotless Space?
+              Get Your Space Deep Cleaned in Gorakhpur Within Hours
             </h2>
             <p className="text-white/70 mb-10 max-w-2xl mx-auto leading-relaxed">
-              Call us now or send a message. Our Gorakhpur team is available 24/7 to make your
-              home, office, or commercial space fresh, clean, and sanitized.
+              Don't let dust, grime, and allergens compromise your health. Contact Gorakhpur's
+              top-rated cleaning company today for instant booking and transparent pricing.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
@@ -556,10 +556,10 @@ const Index = () => {
                 size="lg"
                 className="rounded-full px-10 py-6 text-sm tracking-[0.05em] font-semibold btn-premium"
               >
-                <a href="tel:+91-9115339900">
-                  <Phone className="mr-2 w-4 h-4" />
-                  Call +91-9115339900
-                </a>
+                <Link to="/contact">
+                  Get Free Quote
+                  <ArrowRight className="ml-2 w-4 h-4" />
+                </Link>
               </Button>
               <Button
                 asChild
@@ -567,11 +567,13 @@ const Index = () => {
                 variant="outline"
                 className="rounded-full px-10 py-6 text-sm tracking-[0.05em] font-semibold bg-white/10 text-white border-white/30 hover:bg-white/20 hover:text-white"
               >
-                <Link to="/about">
-                  About Our Team
-                  <ArrowRight className="ml-2 w-4 h-4" />
-                </Link>
+                <a href="tel:+91-9115339900">
+                  <Phone className="mr-2 w-4 h-4" />
+                  Call 24/7: +91-9115339900
+                </a>
               </Button>
+            </div>
+
             </div>
           </motion.div>
         </div>
