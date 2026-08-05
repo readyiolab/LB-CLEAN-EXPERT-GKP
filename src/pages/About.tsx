@@ -3,6 +3,8 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { ArrowRight, Phone, Shield, Clock, Award, Users } from "lucide-react";
 import { Layout } from "@/components/Layout";
+import { Seo } from "@/components/Seo";
+
 import { Button } from "@/components/ui/button";
 
 const About = () => {
@@ -38,6 +40,12 @@ const About = () => {
 
   return (
     <Layout>
+      <Seo
+        title="About Cleaning Expert Gorakhpur | Trained Local Team"
+        description="Learn about Cleaning Expert Gorakhpur — background-verified staff, eco-friendly chemicals, and 24/7 deep cleaning for homes, offices, and commercial spaces."
+        path="/about"
+      />
+
       {/* Hero */}
       <section ref={heroRef} className="relative h-[80vh] md:h-screen overflow-hidden">
         <motion.div className="absolute inset-0" style={{ y: heroImageY }}>

@@ -3,6 +3,8 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Phone, Clock, Sparkles, Shield, CheckCircle, MapPin, Home, UtensilsCrossed, Sofa, Building, Droplets } from "lucide-react";
 import { useRef } from "react";
 import { Layout } from "@/components/Layout";
+import { Seo } from "@/components/Seo";
+
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -93,7 +95,21 @@ const Index = () => {
     "Campierganj", "Sardarnagar", "Mundera Bazar", "Shahpur",
   ];
 
+  const testimonials = [
+    {
+      quote:
+        "Cleaning Expert Gorakhpur transformed our 3BHK flat near Deoria Bypass Road after our renovation. Dust was everywhere, but their team brought in heavy-duty machines and made it brand new in 5 hours!",
+      author: "Anil Verma, Gorakhpur",
+    },
+    {
+      quote:
+        "Managing a clinic requires 24/7 hygiene. Their night-shift commercial cleaning team keeps our healthcare center sanitized without interfering with patient visits.",
+      author: "Dr. S. K. Srivastava, Gorakhpur",
+    },
+  ];
+
   const faqs = [
+
     { q: "Do you provide same-day cleaning in Gorakhpur?", a: "Yes. We operate 24/7 and often accommodate same-day service requests across Gorakhpur based on team availability." },
     { q: "Are your cleaning chemicals safe for kids and pets?", a: "Absolutely. We use eco-friendly, non-toxic solutions that are tough on stains but safe for your family and pets." },
     { q: "How do I book a cleaning service?", a: "You can book instantly by calling +91-9115339900 or filling out the booking form on our website." },
@@ -103,7 +119,20 @@ const Index = () => {
 
   return (
     <Layout>
+      <Seo
+        title="Deep Cleaning Services in Gorakhpur | Cleaning Expert"
+        description="Professional deep home, sofa, and commercial cleaning services in Gorakhpur. Operates 24/7. Book reliable, mechanized sanitization experts near you today."
+        keywords={[
+          "professional deep home cleaning services in gorakhpur",
+          "best sofa and carpet cleaning near me gorakhpur",
+          "affordable kitchen deep cleaning service in gorakhpur",
+          "24 hour commercial deep cleaning company gorakhpur",
+          "local full house deep sanitization services gorakhpur",
+        ]}
+        path="/"
+      />
       {/* Hero Section — Full Viewport */}
+
       <section ref={heroRef} className="relative h-[100svh] -mt-16 md:-mt-20 overflow-hidden">
         <motion.div className="absolute inset-0" style={{ y: heroImageY }}>
           <img
@@ -427,8 +456,49 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Testimonials */}
+      <section className="py-24 md:py-32 bg-secondary/30">
+        <div className="container-full">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-primary mb-3">
+              Testimonials
+            </p>
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-foreground">
+              What Our Customers Say
+            </h2>
+          </motion.div>
+
+          <div className="grid gap-8 md:grid-cols-2">
+            {testimonials.map((t, index) => (
+              <motion.figure
+                key={t.author}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="rounded-2xl border border-border bg-card p-8"
+              >
+                <blockquote className="font-serif text-lg md:text-xl text-foreground leading-relaxed">
+                  “{t.quote}”
+                </blockquote>
+                <figcaption className="mt-6 text-sm font-semibold tracking-[0.05em] text-muted-foreground">
+                  — {t.author}
+                </figcaption>
+              </motion.figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* FAQ */}
       <section className="py-24 md:py-32">
+
         <div className="container-narrow">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -486,14 +556,14 @@ const Index = () => {
             transition={{ duration: 0.8 }}
           >
             <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-white/60 mb-5">
-              Book Today
+              Need Home Services Today?
             </p>
             <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight">
-              Ready for a Spotless Space?
+              Get Your Space Deep Cleaned in Gorakhpur Within Hours
             </h2>
             <p className="text-white/70 mb-10 max-w-2xl mx-auto leading-relaxed">
-              Call us now or send a message. Our Gorakhpur team is available 24/7 to make your
-              home, office, or commercial space fresh, clean, and sanitized.
+              Don't let dust, grime, and allergens compromise your health. Contact Gorakhpur's
+              top-rated cleaning company today for instant booking and transparent pricing.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
@@ -501,10 +571,10 @@ const Index = () => {
                 size="lg"
                 className="rounded-full px-10 py-6 text-sm tracking-[0.05em] font-semibold btn-premium"
               >
-                <a href="tel:+91-9115339900">
-                  <Phone className="mr-2 w-4 h-4" />
-                  Call +91-9115339900
-                </a>
+                <Link to="/contact">
+                  Get Free Quote
+                  <ArrowRight className="ml-2 w-4 h-4" />
+                </Link>
               </Button>
               <Button
                 asChild
@@ -512,13 +582,14 @@ const Index = () => {
                 variant="outline"
                 className="rounded-full px-10 py-6 text-sm tracking-[0.05em] font-semibold bg-white/10 text-white border-white/30 hover:bg-white/20 hover:text-white"
               >
-                <Link to="/about">
-                  About Our Team
-                  <ArrowRight className="ml-2 w-4 h-4" />
-                </Link>
+                <a href="tel:+91-9115339900">
+                  <Phone className="mr-2 w-4 h-4" />
+                  Call 24/7: +91-9115339900
+                </a>
               </Button>
             </div>
           </motion.div>
+
         </div>
       </section>
     </Layout>
