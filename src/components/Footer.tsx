@@ -102,23 +102,24 @@ export const Footer = () => {
               Explore
             </h4>
             <ul className="space-y-3">
-              <li>
-                <Link
-                  to="/"
-                  className="text-sm text-background/60 hover:text-background transition-colors duration-300"
-                >
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/about"
-                  className="text-sm text-background/60 hover:text-background transition-colors duration-300"
-                >
-                  About Us
-                </Link>
-              </li>
+              {[
+                { to: "/", label: "Home" },
+                { to: "/services", label: "Services" },
+                { to: "/blogs", label: "Blogs" },
+                { to: "/about", label: "About Us" },
+                { to: "/contact", label: "Contact Us" },
+              ].map((link) => (
+                <li key={link.to}>
+                  <Link
+                    to={link.to}
+                    className="text-sm text-background/60 hover:text-background transition-colors duration-300"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
+
           </div>
 
           {/* Contact */}

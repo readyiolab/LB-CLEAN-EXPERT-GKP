@@ -3,6 +3,8 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Phone, Clock, Sparkles, Shield, CheckCircle, MapPin, Home, UtensilsCrossed, Sofa, Building, Droplets } from "lucide-react";
 import { useRef } from "react";
 import { Layout } from "@/components/Layout";
+import { Seo } from "@/components/Seo";
+
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -117,7 +119,20 @@ const Index = () => {
 
   return (
     <Layout>
+      <Seo
+        title="Deep Cleaning Services in Gorakhpur | Cleaning Expert"
+        description="Professional deep home, sofa, and commercial cleaning services in Gorakhpur. Operates 24/7. Book reliable, mechanized sanitization experts near you today."
+        keywords={[
+          "professional deep home cleaning services in gorakhpur",
+          "best sofa and carpet cleaning near me gorakhpur",
+          "affordable kitchen deep cleaning service in gorakhpur",
+          "24 hour commercial deep cleaning company gorakhpur",
+          "local full house deep sanitization services gorakhpur",
+        ]}
+        path="/"
+      />
       {/* Hero Section — Full Viewport */}
+
       <section ref={heroRef} className="relative h-[100svh] -mt-16 md:-mt-20 overflow-hidden">
         <motion.div className="absolute inset-0" style={{ y: heroImageY }}>
           <img

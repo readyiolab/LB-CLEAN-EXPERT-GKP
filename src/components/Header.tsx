@@ -18,8 +18,12 @@ export const Header = () => {
 
   const navLinks = [
     { to: "/", label: "Home" },
+    { to: "/services", label: "Services" },
+    { to: "/blogs", label: "Blogs" },
     { to: "/about", label: "About" },
+    { to: "/contact", label: "Contact" },
   ];
+
 
   const serviceLinks = [
     "Deep Home Cleaning",
