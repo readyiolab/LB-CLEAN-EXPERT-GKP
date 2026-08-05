@@ -93,7 +93,21 @@ const Index = () => {
     "Campierganj", "Sardarnagar", "Mundera Bazar", "Shahpur",
   ];
 
+  const testimonials = [
+    {
+      quote:
+        "Cleaning Expert Gorakhpur transformed our 3BHK flat near Deoria Bypass Road after our renovation. Dust was everywhere, but their team brought in heavy-duty machines and made it brand new in 5 hours!",
+      author: "Anil Verma, Gorakhpur",
+    },
+    {
+      quote:
+        "Managing a clinic requires 24/7 hygiene. Their night-shift commercial cleaning team keeps our healthcare center sanitized without interfering with patient visits.",
+      author: "Dr. S. K. Srivastava, Gorakhpur",
+    },
+  ];
+
   const faqs = [
+
     { q: "Do you provide same-day cleaning in Gorakhpur?", a: "Yes. We operate 24/7 and often accommodate same-day service requests across Gorakhpur based on team availability." },
     { q: "Are your cleaning chemicals safe for kids and pets?", a: "Absolutely. We use eco-friendly, non-toxic solutions that are tough on stains but safe for your family and pets." },
     { q: "How do I book a cleaning service?", a: "You can book instantly by calling +91-9115339900 or filling out the booking form on our website." },
@@ -427,8 +441,49 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Testimonials */}
+      <section className="py-24 md:py-32 bg-secondary/30">
+        <div className="container-full">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-primary mb-3">
+              Testimonials
+            </p>
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-foreground">
+              What Our Customers Say
+            </h2>
+          </motion.div>
+
+          <div className="grid gap-8 md:grid-cols-2">
+            {testimonials.map((t, index) => (
+              <motion.figure
+                key={t.author}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="rounded-2xl border border-border bg-card p-8"
+              >
+                <blockquote className="font-serif text-lg md:text-xl text-foreground leading-relaxed">
+                  “{t.quote}”
+                </blockquote>
+                <figcaption className="mt-6 text-sm font-semibold tracking-[0.05em] text-muted-foreground">
+                  — {t.author}
+                </figcaption>
+              </motion.figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* FAQ */}
       <section className="py-24 md:py-32">
+
         <div className="container-narrow">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
