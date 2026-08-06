@@ -4,6 +4,7 @@ import { ArrowRight, Phone, Clock, Sparkles, Shield, CheckCircle, MapPin, Home, 
 import { useRef } from "react";
 import { Layout } from "@/components/Layout";
 import { Seo } from "@/components/Seo";
+import { SeasonalCollections } from "@/components/SeasonalCollections";
 
 import { Button } from "@/components/ui/button";
 import {
