@@ -1,29 +1,10 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { Layout } from "@/components/Layout";
 import { Seo } from "@/components/Seo";
 import { Button } from "@/components/ui/button";
-import { Phone } from "lucide-react";
-
-const articles = [
-  {
-    title: "How Often Should You Deep Clean Your House in Gorakhpur?",
-    excerpt:
-      "Gorakhpur's seasonal climate transitions bring heavy dust and monsoon moisture. Discover why quarterly deep cleaning prevents dust mite accumulation, protects furniture, and improves indoor air quality.",
-    image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=1200&q=80",
-  },
-  {
-    title: "The Ultimate Post-Construction Cleaning Checklist for New Homes",
-    excerpt:
-      "Just finished building or renovating your house opposite Zoo or near Deoria Bypass? Here is a step-by-step checklist to safely strip away concrete dust, paint smears, and chemical fumes before moving in.",
-    image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1200&q=80",
-  },
-  {
-    title: "Why Solar Panel Cleaning Increases Power Output by Up to 25%",
-    excerpt:
-      "Dust, bird droppings, and industrial smog accumulate fast on solar panels across Eastern UP. Learn how regular chemical-free washing restores solar efficiency and boosts energy savings.",
-    image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&q=80",
-  },
-];
+import { Phone, ArrowRight, Clock } from "lucide-react";
+import { articles } from "@/data/articles";
 
 const Blogs = () => (
   <Layout>
@@ -55,25 +36,37 @@ const Blogs = () => (
       <div className="container-full grid gap-10 md:grid-cols-3">
         {articles.map((article, i) => (
           <motion.article
-            key={article.title}
+            key={article.slug}
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: i * 0.1 }}
             className="group"
           >
-            <div className="aspect-[4/3] overflow-hidden rounded-2xl mb-5">
-              <img
-                src={article.image}
-                alt={article.title}
-                loading="lazy"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-            </div>
-            <h2 className="font-serif text-xl md:text-2xl text-foreground mb-3 leading-snug">
-              {article.title}
-            </h2>
-            <p className="text-sm text-muted-foreground leading-relaxed">{article.excerpt}</p>
+            <Link to={`/blogs/${article.slug}`} className="block">
+              <div className="aspect-[4/3] overflow-hidden rounded-2xl mb-5">
+                <img
+                  src={article.image}
+                  alt={article.title}
+                  loading="lazy"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+              </div>
+              <div className="flex items-center gap-3 mb-3 text-[11px] font-semibold tracking-[0.2em] uppercase text-primary">
+                <span>{article.category}</span>
+                <span className="inline-flex items-center gap-1.5 text-muted-foreground font-medium tracking-normal normal-case text-xs">
+                  <Clock className="w-3.5 h-3.5" /> {article.readTime}
+                </span>
+              </div>
+              <h2 className="font-serif text-xl md:text-2xl text-foreground mb-3 leading-snug group-hover:text-primary transition-colors">
+                {article.title}
+              </h2>
+              <p className="text-sm text-muted-foreground leading-relaxed">{article.excerpt}</p>
+              <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-foreground">
+                Read article
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </span>
+            </Link>
           </motion.article>
         ))}
       </div>

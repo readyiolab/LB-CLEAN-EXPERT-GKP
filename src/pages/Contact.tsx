@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { z } from "zod";
-import { MapPin, Mail, Phone, Clock } from "lucide-react";
+import { MapPin, Mail, Phone, Clock, ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { Layout } from "@/components/Layout";
 import { Seo } from "@/components/Seo";
 import { Button } from "@/components/ui/button";
@@ -16,6 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 const services = [
   "Deep Home Cleaning",
@@ -42,7 +43,16 @@ const services = [
   "Others",
 ];
 
-const leadSchema = z.object({
+const stepOneSchema = z.object({
+  service: z.string().refine((v) => services.includes(v), { message: "Please select a service" }),
+  address: z
+    .string()
+    .trim()
+    .nonempty({ message: "Address is required" })
+    .max(300, { message: "Address must be less than 300 characters" }),
+});
+
+const stepTwoSchema = z.object({
   name: z
     .string()
     .trim()
@@ -52,43 +62,58 @@ const leadSchema = z.object({
     .string()
     .trim()
     .regex(/^(\+91[- ]?)?[6-9]\d{9}$/, { message: "Enter a valid 10-digit Indian mobile number" }),
-  address: z
-    .string()
-    .trim()
-    .nonempty({ message: "Address is required" })
-    .max(300, { message: "Address must be less than 300 characters" }),
-  service: z.string().refine((v) => services.includes(v), { message: "Please select a service" }),
 });
 
 type Errors = Partial<Record<"name" | "mobile" | "address" | "service", string>>;
 
+const steps = [
+  { id: 1, label: "What & where" },
+  { id: 2, label: "Your details" },
+];
+
 const Contact = () => {
+  const [step, setStep] = useState(1);
   const [form, setForm] = useState({ name: "", mobile: "", address: "", service: "" });
   const [errors, setErrors] = useState<Errors>({});
 
+  const collect = (issues: z.ZodIssue[]) => {
+    const fieldErrors: Errors = {};
+    issues.forEach((issue) => {
+      const key = issue.path[0] as keyof Errors;
+      if (!fieldErrors[key]) fieldErrors[key] = issue.message;
+    });
+    return fieldErrors;
+  };
+
+  const handleNext = () => {
+    const result = stepOneSchema.safeParse(form);
+    if (!result.success) {
+      setErrors(collect(result.error.issues));
+      return;
+    }
+    setErrors({});
+    setStep(2);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const result = leadSchema.safeParse(form);
+    const result = stepTwoSchema.safeParse(form);
     if (!result.success) {
-      const fieldErrors: Errors = {};
-      result.error.issues.forEach((issue) => {
-        const key = issue.path[0] as keyof Errors;
-        if (!fieldErrors[key]) fieldErrors[key] = issue.message;
-      });
-      setErrors(fieldErrors);
+      setErrors(collect(result.error.issues));
       return;
     }
     setErrors({});
     const message = `New cleaning enquiry:%0AName: ${encodeURIComponent(
       result.data.name
     )}%0AMobile: ${encodeURIComponent(result.data.mobile)}%0AAddress: ${encodeURIComponent(
-      result.data.address
-    )}%0AService: ${encodeURIComponent(result.data.service)}`;
+      form.address
+    )}%0AService: ${encodeURIComponent(form.service)}`;
     window.location.href = `mailto:cleaningexpert9@gmail.com?subject=${encodeURIComponent(
-      "Cleaning Service Enquiry — " + result.data.service
+      "Cleaning Service Enquiry — " + form.service
     )}&body=${message}`;
     toast.success("Thanks! Your enquiry is ready to send. We'll respond within the hour.");
     setForm({ name: "", mobile: "", address: "", service: "" });
+    setStep(1);
   };
 
   return (
@@ -159,73 +184,171 @@ const Contact = () => {
             </ul>
           </div>
 
-          {/* Lead form */}
+          {/* 2-step booking form */}
           <div className="rounded-2xl border border-border bg-card p-6 md:p-8">
-            <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-6">Quick Lead Capture</h2>
-            <form onSubmit={handleSubmit} className="space-y-5" noValidate>
-              <div>
-                <Label htmlFor="name">Name</Label>
-                <Input
-                  id="name"
-                  value={form.name}
-                  maxLength={100}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="mt-2"
-                  placeholder="Your full name"
-                />
-                {errors.name && <p className="mt-1 text-xs text-destructive">{errors.name}</p>}
-              </div>
+            <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-6">
+              Book in Two Quick Steps
+            </h2>
 
-              <div>
-                <Label htmlFor="mobile">Mobile No.</Label>
-                <Input
-                  id="mobile"
-                  type="tel"
-                  inputMode="tel"
-                  maxLength={15}
-                  value={form.mobile}
-                  onChange={(e) => setForm({ ...form, mobile: e.target.value })}
-                  className="mt-2"
-                  placeholder="9115339900"
-                />
-                {errors.mobile && <p className="mt-1 text-xs text-destructive">{errors.mobile}</p>}
-              </div>
+            {/* Step indicator */}
+            <div className="flex items-center gap-3 mb-8">
+              {steps.map((s, i) => (
+                <div key={s.id} className="flex items-center gap-3 flex-1 last:flex-none">
+                  <div className="flex items-center gap-2.5">
+                    <span
+                      className={cn(
+                        "w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold transition-colors",
+                        step >= s.id
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-muted text-muted-foreground"
+                      )}
+                    >
+                      {step > s.id ? <Check className="w-3.5 h-3.5" /> : s.id}
+                    </span>
+                    <span
+                      className={cn(
+                        "text-xs font-medium tracking-wide",
+                        step >= s.id ? "text-foreground" : "text-muted-foreground"
+                      )}
+                    >
+                      {s.label}
+                    </span>
+                  </div>
+                  {i === 0 && (
+                    <span className="h-px flex-1 bg-border relative overflow-hidden">
+                      <span
+                        className={cn(
+                          "absolute inset-0 bg-primary origin-left transition-transform duration-500",
+                          step > 1 ? "scale-x-100" : "scale-x-0"
+                        )}
+                      />
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
 
-              <div>
-                <Label htmlFor="address">Address</Label>
-                <Textarea
-                  id="address"
-                  rows={3}
-                  maxLength={300}
-                  value={form.address}
-                  onChange={(e) => setForm({ ...form, address: e.target.value })}
-                  className="mt-2"
-                  placeholder="Your address in Gorakhpur"
-                />
-                {errors.address && <p className="mt-1 text-xs text-destructive">{errors.address}</p>}
-              </div>
+            <form onSubmit={handleSubmit} noValidate>
+              <AnimatePresence mode="wait" initial={false}>
+                {step === 1 ? (
+                  <motion.div
+                    key="step1"
+                    initial={{ opacity: 0, x: 16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -16 }}
+                    transition={{ duration: 0.25 }}
+                    className="space-y-5"
+                  >
+                    <div>
+                      <Label htmlFor="service">Services Needed</Label>
+                      <Select
+                        value={form.service}
+                        onValueChange={(v) => setForm({ ...form, service: v })}
+                      >
+                        <SelectTrigger id="service" className="mt-2">
+                          <SelectValue placeholder="Select a service" />
+                        </SelectTrigger>
+                        <SelectContent className="max-h-72">
+                          {services.map((s) => (
+                            <SelectItem key={s} value={s}>
+                              {s}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      {errors.service && <p className="mt-1 text-xs text-destructive">{errors.service}</p>}
+                    </div>
 
-              <div>
-                <Label htmlFor="service">Services Needed</Label>
-                <Select value={form.service} onValueChange={(v) => setForm({ ...form, service: v })}>
-                  <SelectTrigger id="service" className="mt-2">
-                    <SelectValue placeholder="Select a service" />
-                  </SelectTrigger>
-                  <SelectContent className="max-h-72">
-                    {services.map((s) => (
-                      <SelectItem key={s} value={s}>
-                        {s}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                {errors.service && <p className="mt-1 text-xs text-destructive">{errors.service}</p>}
-              </div>
+                    <div>
+                      <Label htmlFor="address">Address</Label>
+                      <Textarea
+                        id="address"
+                        rows={3}
+                        maxLength={300}
+                        value={form.address}
+                        onChange={(e) => setForm({ ...form, address: e.target.value })}
+                        className="mt-2"
+                        placeholder="Your address in Gorakhpur"
+                      />
+                      {errors.address && <p className="mt-1 text-xs text-destructive">{errors.address}</p>}
+                    </div>
 
-              <Button type="submit" size="lg" className="w-full rounded-full py-6 font-semibold">
-                Submit Enquiry
-              </Button>
+                    <Button
+                      type="button"
+                      size="lg"
+                      onClick={handleNext}
+                      className="w-full rounded-full py-6 font-semibold"
+                    >
+                      Continue <ArrowRight className="ml-2 w-4 h-4" />
+                    </Button>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="step2"
+                    initial={{ opacity: 0, x: 16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -16 }}
+                    transition={{ duration: 0.25 }}
+                    className="space-y-5"
+                  >
+                    <div className="rounded-xl bg-secondary/40 p-4 text-sm">
+                      <p className="font-semibold text-foreground">{form.service}</p>
+                      <p className="text-muted-foreground mt-1 leading-relaxed">{form.address}</p>
+                    </div>
+
+                    <div>
+                      <Label htmlFor="name">Name</Label>
+                      <Input
+                        id="name"
+                        value={form.name}
+                        maxLength={100}
+                        onChange={(e) => setForm({ ...form, name: e.target.value })}
+                        className="mt-2"
+                        placeholder="Your full name"
+                      />
+                      {errors.name && <p className="mt-1 text-xs text-destructive">{errors.name}</p>}
+                    </div>
+
+                    <div>
+                      <Label htmlFor="mobile">Mobile No.</Label>
+                      <Input
+                        id="mobile"
+                        type="tel"
+                        inputMode="tel"
+                        maxLength={15}
+                        value={form.mobile}
+                        onChange={(e) => setForm({ ...form, mobile: e.target.value })}
+                        className="mt-2"
+                        placeholder="9115339900"
+                      />
+                      {errors.mobile && <p className="mt-1 text-xs text-destructive">{errors.mobile}</p>}
+                    </div>
+
+                    <div className="flex gap-3">
+                      <Button
+                        type="button"
+                        size="lg"
+                        variant="outline"
+                        onClick={() => setStep(1)}
+                        className="rounded-full py-6 px-6 font-semibold"
+                      >
+                        <ArrowLeft className="w-4 h-4" />
+                      </Button>
+                      <Button type="submit" size="lg" className="flex-1 rounded-full py-6 font-semibold">
+                        Confirm Booking Request
+                      </Button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </form>
+
+            <p className="mt-5 text-xs text-muted-foreground text-center">
+              Prefer to talk?{" "}
+              <a href="tel:+91-9115339900" className="text-foreground font-medium hover:text-primary">
+                Call 24/7: +91-9115339900
+              </a>
+            </p>
           </div>
         </div>
       </section>

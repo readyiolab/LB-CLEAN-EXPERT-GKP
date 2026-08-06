@@ -4,6 +4,7 @@ import { ArrowRight, Phone, Clock, Sparkles, Shield, CheckCircle, MapPin, Home, 
 import { useRef } from "react";
 import { Layout } from "@/components/Layout";
 import { Seo } from "@/components/Seo";
+import { SeasonalCollections } from "@/components/SeasonalCollections";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -246,6 +247,9 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Curated seasonal collections */}
+      <SeasonalCollections />
 
       {/* Why Choose Us */}
       <section className="py-24 md:py-32">
