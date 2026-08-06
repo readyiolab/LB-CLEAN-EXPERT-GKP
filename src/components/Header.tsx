@@ -58,9 +58,10 @@ export const Header = () => {
           {/* Logo */}
           <Link
             to="/"
-            className="font-serif text-2xl md:text-3xl tracking-tight text-foreground hover:text-primary transition-colors duration-300"
+            className="flex items-center gap-3 font-serif text-2xl md:text-3xl tracking-tight text-foreground hover:text-primary transition-colors duration-300"
           >
-            Cleaning Expert
+            <img src="/logo.webp" alt="Cleaning Expert Logo" className="h-10 md:h-12 w-auto object-contain rounded-md" />
+            <span className="font-serif text-xl md:text-2xl font-bold">Cleaning Expert</span>
           </Link>
 
           {/* Desktop Navigation */}

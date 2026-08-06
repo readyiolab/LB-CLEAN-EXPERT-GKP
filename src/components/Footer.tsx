@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Phone, Mail, MapPin, Clock } from "lucide-react";
+import { ArrowRight, Phone, Mail, MapPin, Clock, Facebook, Instagram, Youtube } from "lucide-react";
 
 export const Footer = () => {
   return (
@@ -11,13 +11,45 @@ export const Footer = () => {
             <div>
               <Link
                 to="/"
-                className="font-serif text-3xl md:text-4xl tracking-tight text-background"
+                className="flex items-center gap-3 font-serif text-3xl md:text-4xl tracking-tight text-background"
               >
-                Cleaning Expert
+                <img src="/logo.webp" alt="Cleaning Expert Logo" className="h-10 md:h-12 w-auto object-contain rounded-md bg-white p-1" />
+                <span>Cleaning Expert</span>
               </Link>
               <p className="mt-3 text-sm text-background/50 leading-relaxed max-w-sm">
                 Professional deep cleaning services in Gorakhpur. Available 24/7 for homes, offices, and commercial spaces.
               </p>
+              
+              {/* Social Media Links */}
+              <div className="flex items-center gap-4 mt-4">
+                <a
+                  href="https://www.facebook.com/profile.php?id=61593089665207"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook"
+                  className="w-9 h-9 rounded-full bg-background/10 flex items-center justify-center text-background/70 hover:text-background hover:bg-background/20 transition-colors"
+                >
+                  <Facebook className="w-4 h-4" />
+                </a>
+                <a
+                  href="https://www.instagram.com/cleaningexpertgorakhpur/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="w-9 h-9 rounded-full bg-background/10 flex items-center justify-center text-background/70 hover:text-background hover:bg-background/20 transition-colors"
+                >
+                  <Instagram className="w-4 h-4" />
+                </a>
+                <a
+                  href="https://www.youtube.com/@CleaningExpertGorakhpur"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="YouTube"
+                  className="w-9 h-9 rounded-full bg-background/10 flex items-center justify-center text-background/70 hover:text-background hover:bg-background/20 transition-colors"
+                >
+                  <Youtube className="w-4 h-4" />
+                </a>
+              </div>
             </div>
 
             {/* Quick contact */}
