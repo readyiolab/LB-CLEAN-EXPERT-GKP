@@ -248,6 +248,9 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Curated seasonal collections */}
+      <SeasonalCollections />
+
       {/* Why Choose Us */}
       <section className="py-24 md:py-32">
         <div className="container-full">
