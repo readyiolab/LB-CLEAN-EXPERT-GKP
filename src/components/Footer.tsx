@@ -11,10 +11,9 @@ export const Footer = () => {
             <div>
               <Link
                 to="/"
-                className="flex items-center gap-3 font-serif text-3xl md:text-4xl tracking-tight text-background"
+                className="inline-block tracking-tight text-background hover:opacity-90 transition-opacity duration-300"
               >
-                <img src="/logo.webp" alt="Cleaning Expert Logo" className="h-10 md:h-12 w-auto object-contain rounded-md bg-white p-1" />
-                <span>Cleaning Expert</span>
+                <img src="/logo.webp" alt="Cleaning Expert Logo" className="h-14 md:h-16 w-auto object-contain rounded-md bg-white p-1" />
               </Link>
               <p className="mt-3 text-sm text-background/50 leading-relaxed max-w-sm">
                 Professional deep cleaning services in Gorakhpur. Available 24/7 for homes, offices, and commercial spaces.
