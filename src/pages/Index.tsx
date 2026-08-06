@@ -59,7 +59,7 @@ const Index = () => {
     },
     {
       icon: Sparkles,
-      title: "Advanced Machinery & Eco-Chemicals",
+      title: "Advanced Machinery & Eco-Friendly Solutions ",
       description: "Industry-grade vacuum extractors, steam cleaners, and non-toxic solutions safe for kids and pets.",
     },
     {
@@ -82,18 +82,24 @@ const Index = () => {
   ];
 
   const popularServices = [
-    { title: "Deep Home Cleaning", description: "Comprehensive floor-to-ceiling dirt removal and sanitization." },
-    { title: "Sofa & Mattress Shampooing", description: "High-pressure extraction removing deep dust mites and stubborn stains." },
-    { title: "Kitchen Oil & Degreasing Cleaning", description: "Heavy-duty degreasing of chimneys, tiles, exhaust fans, and countertops." },
-    { title: "Bathroom & Tile Descaling", description: "Hard-water stain removal and anti-bacterial disinfection." },
-    { title: "Carpet & Curtain Cleaning", description: "Dry and wet cleaning for delicate fabrics and heavy floor carpets." },
-    { title: "Commercial Office Cleaning", description: "Daily, weekly, and one-time janitorial services for workplaces." },
+    { title: "Deep Home Cleaning", description: "Comprehensive floor-to-ceiling dirt removal and sanitization.", price: "Starts from ₹299" },
+    { title: "Sofa & Mattress Shampooing", description: "High-pressure extraction removing deep dust mites and stubborn stains.", price: "Starts from ₹299" },
+    { title: "Kitchen Oil & Degreasing Cleaning", description: "Heavy-duty degreasing of chimneys, tiles, exhaust fans, and countertops.", price: "Starts from ₹299" },
+    { title: "Bathroom & Tile Descaling", description: "Hard-water stain removal and anti-bacterial disinfection.", price: "Starts from ₹299" },
+    { title: "Carpet & Curtain Cleaning", description: "Dry and wet cleaning for delicate fabrics and heavy floor carpets.", price: "Starts from ₹299" },
+    { title: "Commercial Office Cleaning", description: "Daily, weekly, and one-time janitorial services for workplaces.", price: "Starts from ₹499" },
   ];
 
   const areasServed = [
-    "Gorakhpur City", "Gida", "Rustampur", "Kusmhi", "Mohaddipur",
-    "Sahjanwa", "Chauri Chaura", "Bansgaon", "Khorabar", "Pipraich",
-    "Campierganj", "Sardarnagar", "Mundera Bazar", "Shahpur",
+    "Golghar",
+    "Taramandal",
+    "Gorakhnath",
+    "Civil Lines",
+    "Betiahata",
+    "Basharatpur",
+    "Mohaddipur",
+    "Aladadpur",
+    "Medical College Road",
   ];
 
   const testimonials = [
@@ -382,14 +388,21 @@ const Index = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-linen p-8 rounded-xl border border-border hover-lift"
+                className="bg-linen p-8 rounded-xl border border-border hover-lift flex flex-col justify-between"
               >
-                <h3 className="font-serif text-xl text-foreground mb-3">
-                  {service.title}
-                </h3>
-                <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-                  {service.description}
-                </p>
+                <div>
+                  <div className="flex items-start justify-between gap-3 mb-3">
+                    <h3 className="font-serif text-xl text-foreground">
+                      {service.title}
+                    </h3>
+                    <span className="text-[11px] font-semibold px-2.5 py-1 rounded-full bg-primary/10 text-primary shrink-0">
+                      {service.price}
+                    </span>
+                  </div>
+                  <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+                    {service.description}
+                  </p>
+                </div>
                 <a
                   href="tel:+91-9115339900"
                   className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"

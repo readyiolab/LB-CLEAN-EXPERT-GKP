@@ -1,26 +1,74 @@
+import { useEffect, useState } from "react";
 import { Link, useParams, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, Clock, Phone } from "lucide-react";
+import { ArrowLeft, Calendar, Loader2, Phone } from "lucide-react";
 import { Layout } from "@/components/Layout";
 import { Seo } from "@/components/Seo";
 import { Button } from "@/components/ui/button";
-import { articles, getArticle } from "@/data/articles";
+import { BlogPost as BlogPostType, blogApi } from "@/lib/api/blogs";
+
+const stripHtml = (html = "") => {
+  const documentFragment = new DOMParser().parseFromString(html, "text/html");
+  return documentFragment.body.textContent || "";
+};
+
+const formatDate = (dateString: string) =>
+  new Date(dateString).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
-  const article = slug ? getArticle(slug) : undefined;
+  const [blog, setBlog] = useState<BlogPostType | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
 
-  if (!article) return <Navigate to="/blogs" replace />;
+  useEffect(() => {
+    const fetchBlog = async () => {
+      if (!slug) {
+        setNotFound(true);
+        setLoading(false);
+        return;
+      }
 
-  const related = articles.filter((a) => a.slug !== article.slug);
+      try {
+        setLoading(true);
+        const data = await blogApi.getBySlug(slug);
+        setBlog(data.blog);
+      } catch (error) {
+        setNotFound(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBlog();
+  }, [slug]);
+
+  if (loading) {
+    return (
+      <Layout>
+        <div className="flex min-h-[60vh] items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </div>
+      </Layout>
+    );
+  }
+
+  if (notFound || !blog) return <Navigate to="/blogs" replace />;
+
+  const description = blog.blog_excerpt || blog.blog_description || stripHtml(blog.blog_content).slice(0, 160);
+  const tags = blog.blog_tags?.split(",").map((tag) => tag.trim()).filter(Boolean) || [];
 
   return (
     <Layout>
       <Seo
-        title={article.metaTitle}
-        description={article.metaDescription}
-        keywords={article.keywords}
-        path={`/blogs/${article.slug}`}
+        title={blog.blog_title}
+        description={description}
+        keywords={tags}
+        path={`/blogs/${blog.blog_slug}`}
       />
 
       <article>
@@ -34,54 +82,44 @@ const BlogPost = () => {
             </Link>
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
               <div className="flex items-center gap-4 mb-4 text-[11px] font-semibold tracking-[0.25em] uppercase text-primary">
-                <span>{article.category}</span>
+                <span>Blog</span>
                 <span className="inline-flex items-center gap-1.5 text-muted-foreground font-medium tracking-normal normal-case text-xs">
-                  <Clock className="w-3.5 h-3.5" /> {article.readTime}
+                  <Calendar className="w-3.5 h-3.5" /> {formatDate(blog.created_at)}
                 </span>
               </div>
               <h1 className="font-serif text-3xl md:text-5xl text-foreground leading-tight">
-                {article.title}
+                {blog.blog_title}
               </h1>
             </motion.div>
           </div>
         </section>
 
-        <div className="container-narrow -mt-2">
-          <div className="aspect-[16/9] overflow-hidden rounded-2xl mt-10">
-            <img src={article.image} alt={article.title} className="w-full h-full object-cover" />
+        {blog.blog_image && (
+          <div className="container-narrow -mt-2">
+            <div className="aspect-[16/9] overflow-hidden rounded-2xl mt-10">
+              <img src={blog.blog_image} alt={blog.blog_title} className="w-full h-full object-cover" />
+            </div>
           </div>
-        </div>
+        )}
 
         <section className="py-12 md:py-16">
           <div className="container-narrow">
-            <p className="text-lg md:text-xl text-foreground/90 leading-relaxed font-serif mb-12">
-              {article.intro}
-            </p>
+            {blog.blog_excerpt && (
+              <p className="text-lg md:text-xl text-foreground/90 leading-relaxed font-serif mb-12">
+                {blog.blog_excerpt}
+              </p>
+            )}
 
-            <div className="space-y-12">
-              {article.sections.map((section) => (
-                <div key={section.heading}>
-                  <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-4 leading-snug">
-                    {section.heading}
-                  </h2>
-                  {section.paragraphs.map((p) => (
-                    <p key={p} className="text-muted-foreground leading-relaxed mb-4">
-                      {p}
-                    </p>
-                  ))}
-                  {section.bullets && (
-                    <ul className="mt-4 space-y-3">
-                      {section.bullets.map((b) => (
-                        <li key={b} className="flex gap-3 text-muted-foreground leading-relaxed">
-                          <span className="mt-2 w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
-                          <span>{b}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              ))}
-            </div>
+            {blog.blog_description && (
+              <p className="text-muted-foreground leading-relaxed mb-10">
+                {blog.blog_description}
+              </p>
+            )}
+
+            <div
+              className="blog-content"
+              dangerouslySetInnerHTML={{ __html: blog.blog_content }}
+            />
 
             <div className="mt-14 rounded-2xl bg-secondary/40 p-8 text-center">
               <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-3">
@@ -100,29 +138,6 @@ const BlogPost = () => {
                   <Link to="/contact">Get a free quote</Link>
                 </Button>
               </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="py-16 bg-secondary/20">
-          <div className="container-full">
-            <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-8">Keep reading</h2>
-            <div className="grid gap-8 md:grid-cols-2">
-              {related.map((a) => (
-                <Link key={a.slug} to={`/blogs/${a.slug}`} className="group block">
-                  <div className="aspect-[16/9] overflow-hidden rounded-2xl mb-4">
-                    <img
-                      src={a.image}
-                      alt={a.title}
-                      loading="lazy"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                  </div>
-                  <h3 className="font-serif text-xl text-foreground leading-snug group-hover:text-primary transition-colors">
-                    {a.title}
-                  </h3>
-                </Link>
-              ))}
             </div>
           </div>
         </section>

@@ -43,6 +43,13 @@ const About = () => {
       <Seo
         title="About Cleaning Expert Gorakhpur | Trained Local Team"
         description="Learn about Cleaning Expert Gorakhpur — background-verified staff, eco-friendly chemicals, and 24/7 deep cleaning for homes, offices, and commercial spaces."
+        keywords={[
+          "professional deep home cleaning services in gorakhpur",
+          "best sofa and carpet cleaning near me gorakhpur",
+          "affordable kitchen deep cleaning service in gorakhpur",
+          "24 hour commercial deep cleaning company gorakhpur",
+          "local full house deep sanitization services gorakhpur",
+        ]}
         path="/about"
       />
 

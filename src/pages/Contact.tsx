@@ -1,13 +1,12 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { z } from "zod";
-import { MapPin, Mail, Phone, Clock, ArrowLeft, ArrowRight, Check } from "lucide-react";
+import { MapPin, Phone, Clock } from "lucide-react";
 import { Layout } from "@/components/Layout";
 import { Seo } from "@/components/Seo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -16,7 +15,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
-import { cn } from "@/lib/utils";
+
+const WhatsAppIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+  </svg>
+);
 
 const services = [
   "Deep Home Cleaning",
@@ -43,16 +47,7 @@ const services = [
   "Others",
 ];
 
-const stepOneSchema = z.object({
-  service: z.string().refine((v) => services.includes(v), { message: "Please select a service" }),
-  address: z
-    .string()
-    .trim()
-    .nonempty({ message: "Address is required" })
-    .max(300, { message: "Address must be less than 300 characters" }),
-});
-
-const stepTwoSchema = z.object({
+const leadSchema = z.object({
   name: z
     .string()
     .trim()
@@ -62,65 +57,45 @@ const stepTwoSchema = z.object({
     .string()
     .trim()
     .regex(/^(\+91[- ]?)?[6-9]\d{9}$/, { message: "Enter a valid 10-digit Indian mobile number" }),
+  service: z.string().refine((v) => services.includes(v), { message: "Please select a service" }),
 });
 
-type Errors = Partial<Record<"name" | "mobile" | "address" | "service", string>>;
-
-const steps = [
-  { id: 1, label: "What & where" },
-  { id: 2, label: "Your details" },
-];
+type Errors = Partial<Record<"name" | "mobile" | "service", string>>;
 
 const Contact = () => {
-  const [step, setStep] = useState(1);
-  const [form, setForm] = useState({ name: "", mobile: "", address: "", service: "" });
+  const [form, setForm] = useState({ name: "", mobile: "", service: "" });
   const [errors, setErrors] = useState<Errors>({});
-
-  const collect = (issues: z.ZodIssue[]) => {
-    const fieldErrors: Errors = {};
-    issues.forEach((issue) => {
-      const key = issue.path[0] as keyof Errors;
-      if (!fieldErrors[key]) fieldErrors[key] = issue.message;
-    });
-    return fieldErrors;
-  };
-
-  const handleNext = () => {
-    const result = stepOneSchema.safeParse(form);
-    if (!result.success) {
-      setErrors(collect(result.error.issues));
-      return;
-    }
-    setErrors({});
-    setStep(2);
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const result = stepTwoSchema.safeParse(form);
+    const result = leadSchema.safeParse(form);
     if (!result.success) {
-      setErrors(collect(result.error.issues));
+      const fieldErrors: Errors = {};
+      result.error.issues.forEach((issue) => {
+        const key = issue.path[0] as keyof Errors;
+        if (!fieldErrors[key]) fieldErrors[key] = issue.message;
+      });
+      setErrors(fieldErrors);
       return;
     }
     setErrors({});
-    const message = `New cleaning enquiry:%0AName: ${encodeURIComponent(
+
+    const text = `Hello Cleaning Expert Gorakhpur! 👋%0AI would like to book a service:%0A%0A*Name:* ${encodeURIComponent(
       result.data.name
-    )}%0AMobile: ${encodeURIComponent(result.data.mobile)}%0AAddress: ${encodeURIComponent(
-      form.address
-    )}%0AService: ${encodeURIComponent(form.service)}`;
-    window.location.href = `mailto:cleaningexpert9@gmail.com?subject=${encodeURIComponent(
-      "Cleaning Service Enquiry — " + form.service
-    )}&body=${message}`;
-    toast.success("Thanks! Your enquiry is ready to send. We'll respond within the hour.");
-    setForm({ name: "", mobile: "", address: "", service: "" });
-    setStep(1);
+    )}%0A*Mobile No.:* ${encodeURIComponent(
+      result.data.mobile
+    )}%0A*Service Required:* ${encodeURIComponent(result.data.service)}`;
+
+    window.open(`https://wa.me/919115339900?text=${text}`, "_blank");
+    toast.success("Opening WhatsApp to send your booking enquiry!");
+    setForm({ name: "", mobile: "", service: "" });
   };
 
   return (
     <Layout>
       <Seo
         title="Contact Cleaning Expert Gorakhpur | 24/7 Service"
-        description="Contact Cleaning Expert Gorakhpur at Lohiya Enclave Phase 1. Call or submit our 4-field quick form for 24/7 home and commercial cleaning bookings."
+        description="Contact Cleaning Expert Gorakhpur at Lohiya Enclave Phase 1. Quick booking via WhatsApp or Phone for 24/7 home and commercial cleaning."
         keywords={[
           "contact professional home cleaning company in gorakhpur",
           "24 hour cleaning services contact number gorakhpur",
@@ -164,17 +139,19 @@ const Contact = () => {
               </li>
               <li className="flex items-center gap-4">
                 <Phone className="w-5 h-5 text-primary shrink-0" />
-                <a href="tel:+91-9115339900" className="text-muted-foreground hover:text-foreground transition-colors">
-                  +91-9115339900
+                <a href="tel:+91-9115339900" className="text-muted-foreground hover:text-foreground transition-colors font-medium">
+                  Call 24/7: +91-9115339900
                 </a>
               </li>
               <li className="flex items-center gap-4">
-                <Mail className="w-5 h-5 text-primary shrink-0" />
+                <WhatsAppIcon className="w-5 h-5 text-[#25D366] shrink-0" />
                 <a
-                  href="mailto:cleaningexpert9@gmail.com"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  href="https://wa.me/919115339900"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-foreground transition-colors font-medium"
                 >
-                  cleaningexpert9@gmail.com
+                  WhatsApp: +91-9115339900
                 </a>
               </li>
               <li className="flex items-center gap-4">
@@ -182,173 +159,94 @@ const Contact = () => {
                 <p className="text-muted-foreground">Open 24 Hours / 7 Days a Week</p>
               </li>
             </ul>
+
+            <div className="mt-8 pt-8 border-t border-border flex flex-wrap gap-4">
+              <a
+                href="https://wa.me/919115339900"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-[#25D366] px-6 py-3.5 text-sm font-semibold text-white hover:bg-[#20bd5a] transition-colors shadow-md"
+              >
+                <WhatsAppIcon className="w-5 h-5" />
+                Chat on WhatsApp
+              </a>
+              <a
+                href="tel:+91-9115339900"
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition-colors shadow-md"
+              >
+                <Phone className="w-4 h-4" />
+                Call Now
+              </a>
+            </div>
           </div>
 
-          {/* 2-step booking form */}
-          <div className="rounded-2xl border border-border bg-card p-6 md:p-8">
-            <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-6">
-              Book in Two Quick Steps
+          {/* Quick Lead Form */}
+          <div className="rounded-2xl border border-border bg-card p-6 md:p-8 shadow-sm">
+            <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-2">
+              Book Cleaning Service
             </h2>
-
-            {/* Step indicator */}
-            <div className="flex items-center gap-3 mb-8">
-              {steps.map((s, i) => (
-                <div key={s.id} className="flex items-center gap-3 flex-1 last:flex-none">
-                  <div className="flex items-center gap-2.5">
-                    <span
-                      className={cn(
-                        "w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold transition-colors",
-                        step >= s.id
-                          ? "bg-primary text-primary-foreground"
-                          : "bg-muted text-muted-foreground"
-                      )}
-                    >
-                      {step > s.id ? <Check className="w-3.5 h-3.5" /> : s.id}
-                    </span>
-                    <span
-                      className={cn(
-                        "text-xs font-medium tracking-wide",
-                        step >= s.id ? "text-foreground" : "text-muted-foreground"
-                      )}
-                    >
-                      {s.label}
-                    </span>
-                  </div>
-                  {i === 0 && (
-                    <span className="h-px flex-1 bg-border relative overflow-hidden">
-                      <span
-                        className={cn(
-                          "absolute inset-0 bg-primary origin-left transition-transform duration-500",
-                          step > 1 ? "scale-x-100" : "scale-x-0"
-                        )}
-                      />
-                    </span>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            <form onSubmit={handleSubmit} noValidate>
-              <AnimatePresence mode="wait" initial={false}>
-                {step === 1 ? (
-                  <motion.div
-                    key="step1"
-                    initial={{ opacity: 0, x: 16 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -16 }}
-                    transition={{ duration: 0.25 }}
-                    className="space-y-5"
-                  >
-                    <div>
-                      <Label htmlFor="service">Services Needed</Label>
-                      <Select
-                        value={form.service}
-                        onValueChange={(v) => setForm({ ...form, service: v })}
-                      >
-                        <SelectTrigger id="service" className="mt-2">
-                          <SelectValue placeholder="Select a service" />
-                        </SelectTrigger>
-                        <SelectContent className="max-h-72">
-                          {services.map((s) => (
-                            <SelectItem key={s} value={s}>
-                              {s}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      {errors.service && <p className="mt-1 text-xs text-destructive">{errors.service}</p>}
-                    </div>
-
-                    <div>
-                      <Label htmlFor="address">Address</Label>
-                      <Textarea
-                        id="address"
-                        rows={3}
-                        maxLength={300}
-                        value={form.address}
-                        onChange={(e) => setForm({ ...form, address: e.target.value })}
-                        className="mt-2"
-                        placeholder="Your address in Gorakhpur"
-                      />
-                      {errors.address && <p className="mt-1 text-xs text-destructive">{errors.address}</p>}
-                    </div>
-
-                    <Button
-                      type="button"
-                      size="lg"
-                      onClick={handleNext}
-                      className="w-full rounded-full py-6 font-semibold"
-                    >
-                      Continue <ArrowRight className="ml-2 w-4 h-4" />
-                    </Button>
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="step2"
-                    initial={{ opacity: 0, x: 16 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -16 }}
-                    transition={{ duration: 0.25 }}
-                    className="space-y-5"
-                  >
-                    <div className="rounded-xl bg-secondary/40 p-4 text-sm">
-                      <p className="font-semibold text-foreground">{form.service}</p>
-                      <p className="text-muted-foreground mt-1 leading-relaxed">{form.address}</p>
-                    </div>
-
-                    <div>
-                      <Label htmlFor="name">Name</Label>
-                      <Input
-                        id="name"
-                        value={form.name}
-                        maxLength={100}
-                        onChange={(e) => setForm({ ...form, name: e.target.value })}
-                        className="mt-2"
-                        placeholder="Your full name"
-                      />
-                      {errors.name && <p className="mt-1 text-xs text-destructive">{errors.name}</p>}
-                    </div>
-
-                    <div>
-                      <Label htmlFor="mobile">Mobile No.</Label>
-                      <Input
-                        id="mobile"
-                        type="tel"
-                        inputMode="tel"
-                        maxLength={15}
-                        value={form.mobile}
-                        onChange={(e) => setForm({ ...form, mobile: e.target.value })}
-                        className="mt-2"
-                        placeholder="9115339900"
-                      />
-                      {errors.mobile && <p className="mt-1 text-xs text-destructive">{errors.mobile}</p>}
-                    </div>
-
-                    <div className="flex gap-3">
-                      <Button
-                        type="button"
-                        size="lg"
-                        variant="outline"
-                        onClick={() => setStep(1)}
-                        className="rounded-full py-6 px-6 font-semibold"
-                      >
-                        <ArrowLeft className="w-4 h-4" />
-                      </Button>
-                      <Button type="submit" size="lg" className="flex-1 rounded-full py-6 font-semibold">
-                        Confirm Booking Request
-                      </Button>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </form>
-
-            <p className="mt-5 text-xs text-muted-foreground text-center">
-              Prefer to talk?{" "}
-              <a href="tel:+91-9115339900" className="text-foreground font-medium hover:text-primary">
-                Call 24/7: +91-9115339900
-              </a>
+            <p className="text-muted-foreground text-sm mb-6">
+              Fill in your details below for instant booking via WhatsApp.
             </p>
+
+            <form onSubmit={handleSubmit} noValidate className="space-y-5">
+              <div>
+                <Label htmlFor="name">Name *</Label>
+                <Input
+                  id="name"
+                  value={form.name}
+                  maxLength={100}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  className="mt-2"
+                  placeholder="Enter your full name"
+                />
+                {errors.name && <p className="mt-1 text-xs text-destructive">{errors.name}</p>}
+              </div>
+
+              <div>
+                <Label htmlFor="mobile">Mobile No. *</Label>
+                <Input
+                  id="mobile"
+                  type="tel"
+                  inputMode="tel"
+                  maxLength={15}
+                  value={form.mobile}
+                  onChange={(e) => setForm({ ...form, mobile: e.target.value })}
+                  className="mt-2"
+                  placeholder="Enter 10-digit mobile number"
+                />
+                {errors.mobile && <p className="mt-1 text-xs text-destructive">{errors.mobile}</p>}
+              </div>
+
+              <div>
+                <Label htmlFor="service">Services Needed *</Label>
+                <Select
+                  value={form.service}
+                  onValueChange={(v) => setForm({ ...form, service: v })}
+                >
+                  <SelectTrigger id="service" className="mt-2">
+                    <SelectValue placeholder="Select a service" />
+                  </SelectTrigger>
+                  <SelectContent className="max-h-72">
+                    {services.map((s) => (
+                      <SelectItem key={s} value={s}>
+                        {s}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {errors.service && <p className="mt-1 text-xs text-destructive">{errors.service}</p>}
+              </div>
+
+              <Button
+                type="submit"
+                size="lg"
+                className="w-full rounded-full py-6 font-semibold bg-[#25D366] hover:bg-[#20bd5a] text-white flex items-center justify-center gap-2 text-base shadow-md"
+              >
+                <WhatsAppIcon className="w-5 h-5" />
+                Book via WhatsApp
+              </Button>
+            </form>
           </div>
         </div>
       </section>
@@ -357,3 +255,4 @@ const Contact = () => {
 };
 
 export default Contact;
+

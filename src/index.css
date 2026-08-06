@@ -207,6 +207,72 @@
   .btn-premium:hover::after {
     @apply translate-y-0;
   }
+
+  .blog-content {
+    @apply max-w-none text-foreground/90 leading-relaxed;
+  }
+
+  .blog-content h1 {
+    @apply mt-12 mb-6 font-serif text-4xl font-semibold leading-tight text-foreground;
+  }
+
+  .blog-content h2 {
+    @apply mt-12 mb-5 font-serif text-3xl font-semibold leading-snug text-foreground;
+  }
+
+  .blog-content h3 {
+    @apply mt-10 mb-4 font-serif text-2xl font-semibold leading-snug text-foreground;
+  }
+
+  .blog-content h4,
+  .blog-content h5,
+  .blog-content h6 {
+    @apply mt-8 mb-3 font-serif text-xl font-semibold text-foreground;
+  }
+
+  .blog-content p {
+    @apply mb-5 text-base leading-8 text-muted-foreground;
+  }
+
+  .blog-content strong {
+    @apply font-semibold text-foreground;
+  }
+
+  .blog-content em {
+    @apply italic;
+  }
+
+  .blog-content a {
+    @apply font-medium text-primary underline underline-offset-4;
+  }
+
+  .blog-content ul {
+    @apply mb-6 list-disc space-y-2 pl-7 text-muted-foreground;
+  }
+
+  .blog-content ol {
+    @apply mb-6 list-decimal space-y-2 pl-7 text-muted-foreground;
+  }
+
+  .blog-content blockquote {
+    @apply my-8 border-l-4 border-primary bg-secondary/40 py-4 pl-6 pr-4 font-serif text-xl text-foreground;
+  }
+
+  .blog-content img {
+    @apply my-8 max-w-full rounded-2xl;
+  }
+
+  .blog-content .ql-align-center {
+    text-align: center;
+  }
+
+  .blog-content .ql-align-right {
+    text-align: right;
+  }
+
+  .blog-content .ql-align-justify {
+    text-align: justify;
+  }
 }
 
 @layer utilities {
