@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, Phone, Clock, Sparkles, Shield, CheckCircle, MapPin, Home, UtensilsCrossed, Sofa, Building, Droplets } from "lucide-react";
+import { ArrowRight, Clock, Sparkles, Shield, CheckCircle, MapPin, Home, UtensilsCrossed, Sofa, Building, Droplets } from "lucide-react";
 import { useRef } from "react";
 import { Layout } from "@/components/Layout";
 import { Seo } from "@/components/Seo";
-import { SeasonalCollections } from "@/components/SeasonalCollections";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -82,12 +81,15 @@ const Index = () => {
   ];
 
   const popularServices = [
-    { title: "Deep Home Cleaning", description: "Comprehensive floor-to-ceiling dirt removal and sanitization.", price: "Starts from ₹299" },
-    { title: "Sofa & Mattress Shampooing", description: "High-pressure extraction removing deep dust mites and stubborn stains.", price: "Starts from ₹299" },
-    { title: "Kitchen Oil & Degreasing Cleaning", description: "Heavy-duty degreasing of chimneys, tiles, exhaust fans, and countertops.", price: "Starts from ₹299" },
-    { title: "Bathroom & Tile Descaling", description: "Hard-water stain removal and anti-bacterial disinfection.", price: "Starts from ₹299" },
-    { title: "Carpet & Curtain Cleaning", description: "Dry and wet cleaning for delicate fabrics and heavy floor carpets.", price: "Starts from ₹299" },
-    { title: "Commercial Office Cleaning", description: "Daily, weekly, and one-time janitorial services for workplaces.", price: "Starts from ₹499" },
+    { title: "Deep Home Cleaning", description: "Comprehensive floor-to-ceiling dirt removal and sanitization.", price: "₹1,999" },
+    { title: "Sofa Cleaning", description: "Fabric foam shampooing and deep vacuum extraction for sofas.", price: "₹299" },
+    { title: "Mattress / Carpet Cleaning", description: "Allergen extraction and hot-water cleaning for mattresses and carpets.", price: "₹699" },
+    { title: "Curtain Cleaning", description: "On-site dry cleaning and steam vacuuming for curtains.", price: "₹299" },
+    { title: "Move-In / Move-Out Cleaning", description: "Turnkey deep sanitization for tenant transitions and vacant properties.", price: "₹1,499" },
+    { title: "Kitchen Cleaning", description: "Heavy-duty degreasing of chimneys, tiles, exhaust fans, and countertops.", price: "₹1,499" },
+    { title: "Bathroom Cleaning", description: "Hard-water stain removal and anti-bacterial disinfection.", price: "₹499" },
+    { title: "Commercial & Institutional Cleaning", description: "Scheduled sanitization for offices, schools, hospitals, and retail spaces.", price: "₹1,999" },
+    { title: "Specialized Industrial & Outdoor Cleaning", description: "Water tank, solar panel, and post-construction cleanup.", price: "₹699" },
   ];
 
   const areasServed = [
@@ -116,7 +118,6 @@ const Index = () => {
   ];
 
   const faqs = [
-
     { q: "Do you provide same-day cleaning in Gorakhpur?", a: "Yes. We operate 24/7 and often accommodate same-day service requests across Gorakhpur based on team availability." },
     { q: "Are your cleaning chemicals safe for kids and pets?", a: "Absolutely. We use eco-friendly, non-toxic solutions that are tough on stains but safe for your family and pets." },
     { q: "How do I book a cleaning service?", a: "You can book instantly by calling +91-9115339900 or filling out the booking form on our website." },
@@ -140,11 +141,11 @@ const Index = () => {
       />
       {/* Hero Section — Full Viewport */}
 
-      <section ref={heroRef} className="relative h-[100svh] -mt-16 md:-mt-20 overflow-hidden">
+      <section ref={heroRef} className="relative h-[100svh] -mt-20 md:-mt-24 overflow-hidden">
         <motion.div className="absolute inset-0" style={{ y: heroImageY }}>
           <img
-            src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=1920&q=80"
-            alt="Professional deep cleaning service in Gorakhpur"
+            src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1920&q=80"
+            alt="Indian professional ready to serve deep cleaning clients in Gorakhpur"
             className="w-full h-[120%] object-cover animate-ken-burns"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-charcoal/40 via-charcoal/20 to-charcoal/60" />
@@ -167,10 +168,6 @@ const Index = () => {
               className="flex flex-wrap items-center gap-4 mb-6"
             >
               <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white text-xs font-medium backdrop-blur-sm">
-                <Clock className="w-3.5 h-3.5" />
-                24/7 Service Available
-              </span>
-              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white text-xs font-medium backdrop-blur-sm">
                 <MapPin className="w-3.5 h-3.5" />
                 Gorakhpur, UP
               </span>
@@ -182,7 +179,7 @@ const Index = () => {
               <span className="text-primary-foreground">Services in Gorakhpur</span>
             </h1>
             <p className="text-base md:text-lg text-white/80 mb-10 leading-relaxed max-w-2xl">
-              24/7 eco-friendly, mechanized cleaning for homes, offices, and commercial spaces.
+              Eco-friendly, mechanized cleaning for homes, offices, and commercial spaces.
               Book reliable, trained sanitization experts near you today.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
@@ -191,10 +188,10 @@ const Index = () => {
                 size="lg"
                 className="rounded-full px-10 py-6 text-sm tracking-[0.05em] font-semibold btn-premium"
               >
-                <a href="tel:+91-9115339900">
-                  <Phone className="mr-2 w-4 h-4" />
+                <Link to="/contact">
                   Book Instant Service
-                </a>
+                  <ArrowRight className="ml-2 w-4 h-4" />
+                </Link>
               </Button>
               <Button
                 asChild
@@ -202,9 +199,9 @@ const Index = () => {
                 variant="outline"
                 className="rounded-full px-10 py-6 text-sm tracking-[0.05em] font-semibold bg-white/10 text-white border-white/30 hover:bg-white/20 hover:text-white"
               >
-                <a href="tel:+91-9115339900">
-                  Call 24/7: +91-9115339900
-                </a>
+                <Link to="/services">
+                  View Services
+                </Link>
               </Button>
             </div>
           </motion.div>
@@ -254,9 +251,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Curated seasonal collections */}
-      <SeasonalCollections />
-
       {/* Why Choose Us */}
       <section className="py-24 md:py-32">
         <div className="container-full">
@@ -269,8 +263,8 @@ const Index = () => {
               className="relative aspect-[4/3] overflow-hidden rounded-2xl"
             >
               <img
-                src="https://images.unsplash.com/photo-1527515637464-cff94eecc1ab?w=1200&q=80"
-                alt="Trained cleaning team with professional equipment"
+                src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=1200&q=80"
+                alt="Indian cleaning expert and local trained staff in Gorakhpur"
                 className="w-full h-full object-cover"
               />
             </motion.div>
@@ -403,13 +397,13 @@ const Index = () => {
                     {service.description}
                   </p>
                 </div>
-                <a
-                  href="tel:+91-9115339900"
+                <Link
+                  to="/contact"
                   className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
                 >
                   Book Now
                   <ArrowRight className="w-4 h-4" />
-                </a>
+                </Link>
               </motion.div>
             ))}
           </div>
@@ -464,8 +458,8 @@ const Index = () => {
               className="relative aspect-[4/3] overflow-hidden rounded-2xl"
             >
               <img
-                src="https://images.unsplash.com/photo-1628177142898-93e36e4e3a6b?w=1200&q=80"
-                alt="Deep cleaning service across Gorakhpur locations"
+                src="https://images.unsplash.com/photo-1609220136736-443140cffec6?w=1200&q=80"
+                alt="Happy Indian family in a clean home across Gorakhpur"
                 className="w-full h-full object-cover"
               />
             </motion.div>
@@ -515,7 +509,6 @@ const Index = () => {
 
       {/* FAQ */}
       <section className="py-24 md:py-32">
-
         <div className="container-narrow">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -558,8 +551,8 @@ const Index = () => {
       <section className="py-24 md:py-32 relative overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&q=80"
-            alt="Clean and sparkling home interior"
+            src="https://images.unsplash.com/photo-1619895862022-09114b46f8f2?w=1920&q=80"
+            alt="Indian customer enjoying a spotless home after deep cleaning"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-charcoal/70" />
@@ -599,14 +592,55 @@ const Index = () => {
                 variant="outline"
                 className="rounded-full px-10 py-6 text-sm tracking-[0.05em] font-semibold bg-white/10 text-white border-white/30 hover:bg-white/20 hover:text-white"
               >
-                <a href="tel:+91-9115339900">
-                  <Phone className="mr-2 w-4 h-4" />
-                  Call 24/7: +91-9115339900
-                </a>
+                <Link to="/services">
+                  Explore Services
+                </Link>
               </Button>
             </div>
           </motion.div>
+        </div>
+      </section>
 
+      {/* Map Location */}
+      <section className="py-16 md:py-24 bg-linen">
+        <div className="container-full">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-10"
+          >
+            <p className="text-[11px] font-semibold tracking-[0.3em] uppercase text-primary mb-3">
+              Find Us
+            </p>
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-foreground mb-4">
+              Our Location in Gorakhpur
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed flex items-start justify-center gap-2">
+              <MapPin className="w-4 h-4 text-primary mt-1 shrink-0" />
+              <span>
+                32/301 Lohiya Enclave Phase 1, Opposite Zoo, Deoria Bypass Road, Gorakhpur, UP 273016
+              </span>
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="overflow-hidden rounded-2xl border border-border shadow-sm"
+          >
+            <iframe
+              title="Cleaning Expert Gorakhpur location map"
+              src="https://www.google.com/maps?q=32/301+Lohiya+Enclave+Phase+1,+Opposite+Zoo,+Deoria+bypass+road,+Gorakhpur,+UP+273016&output=embed"
+              className="w-full h-[320px] md:h-[420px] border-0"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
+          </motion.div>
         </div>
       </section>
     </Layout>

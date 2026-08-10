@@ -9,39 +9,39 @@ const groups = [
     label: "Residential Cleaning Services",
     startingPrice: "Starts from ₹299",
     items: [
-      ["Deep Home Cleaning", "Comprehensive sanitization of living areas, bedrooms, balconies, doors, windows, and ceiling fans.", "Starts from ₹299"],
-      ["Kitchen Deep Cleaning", "Heavy degreasing of tiles, chimney exteriors, cabinets, countertop descaling, and appliance scrubbing.", "Starts from ₹299"],
-      ["Bathroom Deep Cleaning", "Hard water stain removal, tile grouting cleanup, disinfectant wash, and tap polishing.", "Starts from ₹299"],
-      ["Sofa Cleaning", "Fabric foam shampooing, leather conditioning, and deep vacuum extraction.", "Starts from ₹299"],
-      ["Carpet Cleaning", "Industrial dry cleaning and hot-water extraction for rugs and wall-to-wall carpets.", "Starts from ₹299"],
-      ["Mattress Cleaning", "UV-C treatment and deep allergen extraction for dust mites and bedbugs.", "Starts from ₹299"],
-      ["Curtain Cleaning", "On-site dry cleaning and steam vacuuming without dismantling setup.", "Starts from ₹299"],
-      ["Move-In / Move-Out Cleaning", "Turnkey deep sanitization for tenant transitions and vacant properties.", "Starts from ₹299"],
-      ["Villa & Apartment Cleaning", "Dedicated crew cleaning for large residential complexes and individual houses.", "Starts from ₹299"],
+      ["Deep Home Cleaning", "Comprehensive sanitization of living areas, bedrooms, balconies, doors, windows, and ceiling fans.", "₹1,999"],
+      ["Kitchen Deep Cleaning", "Heavy degreasing of tiles, chimney exteriors, cabinets, countertop descaling, and appliance scrubbing.", "₹1,499"],
+      ["Bathroom Deep Cleaning", "Hard water stain removal, tile grouting cleanup, disinfectant wash, and tap polishing.", "₹499"],
+      ["Sofa Cleaning", "Fabric foam shampooing, leather conditioning, and deep vacuum extraction.", "₹299"],
+      ["Carpet Cleaning", "Industrial dry cleaning and hot-water extraction for rugs and wall-to-wall carpets.", "₹699"],
+      ["Mattress Cleaning", "UV-C treatment and deep allergen extraction for dust mites and bedbugs.", "₹699"],
+      ["Curtain Cleaning", "On-site dry cleaning and steam vacuuming without dismantling setup.", "₹299"],
+      ["Move-In / Move-Out Cleaning", "Turnkey deep sanitization for tenant transitions and vacant properties.", "₹1,499"],
+      ["Villa & Apartment Cleaning", "Dedicated crew cleaning for large residential complexes and individual houses.", "₹1,999"],
     ],
   },
   {
     label: "Commercial & Institutional Cleaning",
-    startingPrice: "Starts from ₹499",
+    startingPrice: "Starts from ₹1,999",
     items: [
-      ["Commercial Cleaning", "Custom sanitization plans for corporate buildings and retail spaces.", "Starts from ₹499"],
-      ["Office Cleaning", "Desk sanitization, carpet vacuuming, pantry cleanup, and washroom hygiene.", "Starts from ₹499"],
-      ["Retail Store Cleaning", "High-footfall floor buffing, glass display cleaning, and shelf dusting.", "Starts from ₹499"],
-      ["Restaurant Cleaning", "Kitchen grease trap cleaning, floor scrubbing, and dining hall sanitization.", "Starts from ₹499"],
-      ["School & College Cleaning", "Safe, non-toxic sanitization of classrooms, corridors, and sports areas.", "Starts from ₹499"],
-      ["Hospital & Clinic Cleaning", "Hospital-grade disinfections adhering to medical hygiene protocols.", "Starts from ₹499"],
-      ["Warehouse Cleaning", "High-ceiling dust removal, industrial floor sweeping, and rack cleaning.", "Starts from ₹499"],
-      ["Factory Cleaning", "Heavy machinery exterior wiping, industrial grease management, and site cleanup.", "Starts from ₹499"],
-      ["Hotel & Guest House Cleaning", "Rapid turnover deep cleaning for guest rooms, lobbies, and banquet halls.", "Starts from ₹499"],
+      ["Commercial Cleaning", "Custom sanitization plans for corporate buildings and retail spaces.", "₹1,999"],
+      ["Office Cleaning", "Desk sanitization, carpet vacuuming, pantry cleanup, and washroom hygiene.", "₹1,999"],
+      ["Retail Store Cleaning", "High-footfall floor buffing, glass display cleaning, and shelf dusting.", "₹1,999"],
+      ["Restaurant Cleaning", "Kitchen grease trap cleaning, floor scrubbing, and dining hall sanitization.", "₹1,999"],
+      ["School & College Cleaning", "Safe, non-toxic sanitization of classrooms, corridors, and sports areas.", "₹1,999"],
+      ["Hospital & Clinic Cleaning", "Hospital-grade disinfections adhering to medical hygiene protocols.", "₹1,999"],
+      ["Warehouse Cleaning", "High-ceiling dust removal, industrial floor sweeping, and rack cleaning.", "₹1,999"],
+      ["Factory Cleaning", "Heavy machinery exterior wiping, industrial grease management, and site cleanup.", "₹1,999"],
+      ["Hotel & Guest House Cleaning", "Rapid turnover deep cleaning for guest rooms, lobbies, and banquet halls.", "₹1,999"],
     ],
   },
   {
     label: "Specialized Industrial & Outdoor Cleaning",
-    startingPrice: "Starts from ₹299",
+    startingPrice: "Starts from ₹699",
     items: [
-      ["Water Tank Cleaning", "6-stage overhead and underground tank cleaning using high-pressure jet washers.", "Starts from ₹299"],
-      ["Solar Panel Cleaning", "Specialized soft-wash treatment to eliminate dust layers and restore maximum energy efficiency.", "Starts from ₹299"],
-      ["Post Construction Cleaning", "Heavy paint removal, grout residue cleaning, and fine dust elimination.", "Starts from ₹499"],
+      ["Water Tank Cleaning", "6-stage overhead and underground tank cleaning using high-pressure jet washers.", "₹699"],
+      ["Solar Panel Cleaning", "Specialized soft-wash treatment to eliminate dust layers and restore maximum energy efficiency.", "₹699"],
+      ["Post Construction Cleaning", "Heavy paint removal, grout residue cleaning, and fine dust elimination.", "₹699"],
     ],
   },
 ];
@@ -77,7 +77,9 @@ const Services = () => (
           <p className="mt-6 text-muted-foreground max-w-2xl leading-relaxed">
             From full-house deep cleaning to water tank and solar panel maintenance, our trained
             local teams handle every residential, commercial, and industrial cleaning need — 24/7.
-            Pricing starts from as low as <strong className="text-foreground font-semibold">₹299</strong> for residential services and <strong className="text-foreground font-semibold">₹499</strong> for commercial solutions.
+            Residential packages start from <strong className="text-foreground font-semibold">₹299</strong>,
+            commercial from <strong className="text-foreground font-semibold">₹1,999</strong>, and
+            specialized outdoor cleaning from <strong className="text-foreground font-semibold">₹699</strong>.
           </p>
         </motion.div>
       </div>

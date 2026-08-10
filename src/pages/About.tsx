@@ -57,8 +57,8 @@ const About = () => {
       <section ref={heroRef} className="relative h-[80vh] md:h-screen overflow-hidden">
         <motion.div className="absolute inset-0" style={{ y: heroImageY }}>
           <img
-            src="https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=1920&q=80"
-            alt="Professional cleaning team in Gorakhpur"
+            src="https://images.unsplash.com/photo-1573497019940-1cfe39a7c3be?w=1920&q=80"
+            alt="Indian professional cleaning team in Gorakhpur"
             className="w-full h-[120%] object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-charcoal/20 via-charcoal/10 to-charcoal/50" />
@@ -146,8 +146,8 @@ const About = () => {
             >
               <div className="aspect-[4/3] overflow-hidden rounded-2xl">
                 <img
-                  src="https://images.unsplash.com/photo-1563453392212-326f5e854473?w=1200&q=80"
-                  alt="Cleaning team at work"
+                  src="https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?w=1200&q=80"
+                  alt="Indian cleaning experts at work in Gorakhpur"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -203,8 +203,8 @@ const About = () => {
       <section className="py-28 md:py-40 relative overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1920&q=80"
-            alt=""
+            src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=1920&q=80"
+            alt="Trusted Indian service professionals in Gorakhpur"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-charcoal/60" />

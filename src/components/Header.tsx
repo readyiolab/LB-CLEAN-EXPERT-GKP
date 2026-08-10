@@ -54,13 +54,13 @@ export const Header = () => {
       )}
     >
       <nav className="container-full">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="flex items-center justify-between h-20 md:h-24">
           {/* Logo */}
           <Link
             to="/"
             className="flex items-center gap-3 tracking-tight text-foreground hover:opacity-90 transition-opacity duration-300"
           >
-            <img src="/logo.webp" alt="Cleaning Expert Logo" className="h-14 md:h-16 w-auto object-contain rounded-md" />
+            <img src="/logo.webp" alt="Cleaning Expert Logo" className="h-20 md:h-24 w-auto object-contain rounded-md" />
           </Link>
 
           {/* Desktop Navigation */}

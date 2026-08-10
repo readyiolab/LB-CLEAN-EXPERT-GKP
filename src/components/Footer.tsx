@@ -13,7 +13,7 @@ export const Footer = () => {
                 to="/"
                 className="inline-block tracking-tight text-background hover:opacity-90 transition-opacity duration-300"
               >
-                <img src="/logo.webp" alt="Cleaning Expert Logo" className="h-14 md:h-16 w-auto object-contain rounded-md bg-white p-1" />
+                <img src="/logo.webp" alt="Cleaning Expert Logo" className="h-20 md:h-24 w-auto object-contain rounded-md bg-white p-1" />
               </Link>
               <p className="mt-3 text-sm text-background/50 leading-relaxed max-w-sm">
                 Professional deep cleaning services in Gorakhpur. Available 24/7 for homes, offices, and commercial spaces.
