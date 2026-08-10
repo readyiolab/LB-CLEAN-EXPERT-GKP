@@ -144,8 +144,8 @@ const Index = () => {
       <section ref={heroRef} className="relative h-[100svh] -mt-20 md:-mt-24 overflow-hidden">
         <motion.div className="absolute inset-0" style={{ y: heroImageY }}>
           <img
-            src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1920&q=80"
-            alt="Indian professional ready to serve deep cleaning clients in Gorakhpur"
+            src="/images/hero-cleaning-indian.jpg"
+            alt="Indian cleaning professional mopping a home in Gorakhpur"
             className="w-full h-[120%] object-cover animate-ken-burns"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-charcoal/40 via-charcoal/20 to-charcoal/60" />
@@ -263,8 +263,8 @@ const Index = () => {
               className="relative aspect-[4/3] overflow-hidden rounded-2xl"
             >
               <img
-                src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=1200&q=80"
-                alt="Indian cleaning expert and local trained staff in Gorakhpur"
+                src="/images/team-cleaning-indian.jpg"
+                alt="Indian cleaning experts with professional equipment in Gorakhpur"
                 className="w-full h-full object-cover"
               />
             </motion.div>
@@ -458,8 +458,8 @@ const Index = () => {
               className="relative aspect-[4/3] overflow-hidden rounded-2xl"
             >
               <img
-                src="https://images.unsplash.com/photo-1609220136736-443140cffec6?w=1200&q=80"
-                alt="Happy Indian family in a clean home across Gorakhpur"
+                src="/images/kitchen-cleaning-indian.jpg"
+                alt="Indian housekeeper deep cleaning a kitchen in Gorakhpur"
                 className="w-full h-full object-cover"
               />
             </motion.div>
@@ -551,8 +551,8 @@ const Index = () => {
       <section className="py-24 md:py-32 relative overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="https://images.unsplash.com/photo-1619895862022-09114b46f8f2?w=1920&q=80"
-            alt="Indian customer enjoying a spotless home after deep cleaning"
+            src="/images/family-clean-home-indian.jpg"
+            alt="Happy Indian family in a spotless home after deep cleaning"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-charcoal/70" />

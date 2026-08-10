@@ -9,7 +9,7 @@ const seasonalPackages = [
     description:
       "Anti-fungal treatment for sofas, mattresses and wardrobes, plus drainage and terrace clearance before the rains settle in.",
     includes: ["Sofa & mattress extraction", "Anti-fungal wall treatment", "Drain & terrace clearance"],
-    image: "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?w=1200&q=80",
+    image: "/images/sofa-cleaning-indian.jpg",
   },
   {
     season: "Festive",
@@ -17,7 +17,7 @@ const seasonalPackages = [
     description:
       "Floor-to-ceiling deep clean with kitchen degreasing and chimney care, timed so your home is guest-ready before the celebrations.",
     includes: ["Full-house deep clean", "Kitchen & chimney degreasing", "Glass, fans & fixtures"],
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80",
+    image: "/images/kitchen-cleaning-indian.jpg",
   },
   {
     season: "Summer",
@@ -25,7 +25,7 @@ const seasonalPackages = [
     description:
       "Dry-season essentials for Gorakhpur rooftops and homes — six-stage water tank cleaning and chemical-free solar panel soft washing.",
     includes: ["6-stage water tank clean", "Solar panel soft wash", "Curtain & carpet extraction"],
-    image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&q=80",
+    image: "/images/bathroom-cleaning-indian.jpg",
   },
 ];
 

@@ -25,7 +25,7 @@ export const articles: Article[] = [
     title: "How Often Should You Deep Clean Your House in Gorakhpur?",
     excerpt:
       "Gorakhpur's seasonal climate transitions bring heavy dust and monsoon moisture. Discover why quarterly deep cleaning prevents dust mite accumulation, protects furniture, and improves indoor air quality.",
-    image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=1600&q=80",
+    image: "/images/hero-cleaning-indian.jpg",
     readTime: "6 min read",
     category: "Home Care",
     date: "2026-01-12",
@@ -77,7 +77,7 @@ export const articles: Article[] = [
     title: "The Ultimate Post-Construction Cleaning Checklist for New Homes",
     excerpt:
       "Just finished building or renovating your house opposite Zoo or near Deoria Bypass? Here is a step-by-step checklist to safely strip away concrete dust, paint smears, and chemical fumes before moving in.",
-    image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1600&q=80",
+    image: "/images/team-cleaning-indian.jpg",
     readTime: "7 min read",
     category: "New Homes",
     date: "2026-02-04",
@@ -140,7 +140,7 @@ export const articles: Article[] = [
     title: "Why Solar Panel Cleaning Increases Power Output by Up to 25%",
     excerpt:
       "Dust, bird droppings, and industrial smog accumulate fast on solar panels across Eastern UP. Learn how regular chemical-free washing restores solar efficiency and boosts energy savings.",
-    image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1600&q=80",
+    image: "/images/kitchen-cleaning-indian.jpg",
     readTime: "5 min read",
     category: "Specialised",
     date: "2026-03-18",
